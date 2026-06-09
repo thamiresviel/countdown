@@ -1,9 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
-@import url(https://fonts.googleapis.com/css?family=Space+Mono:regular,italic,700,700italic);
+/* style.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400&display=swap");
 
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -37,7 +39,7 @@ body {
   font-size: clamp(2.5rem, 8vw, 6rem);
   letter-spacing: 0.15em;
   margin-bottom: 3rem;
-  color: #fff;
+  color: #ffffff;
 }
 
 .countdown {
@@ -56,10 +58,10 @@ body {
 
 .numero {
   font-family: "Space Mono", monospace;
-  font-size: clamp(2rem 6vw, 4rem);
+  font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  color: #ffffff;
   transition: opacity 0.2s ease;
 }
 
