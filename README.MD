@@ -45,8 +45,7 @@ O projeto foi construído com foco didático: cada decisão de código está com
 
 ## Demo
 
-> Adicione aqui o link do GitHub Pages após publicar.  
-> Exemplo: `https://thamiresviel.github.io/countdown`
+https://thamiresviel.github.io/countdown
 
 ---
 
