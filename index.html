@@ -3,42 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Contador regressivo para o Ano Novo" />
-    <title>Ano novo — Contador</title>
-    <!-- CSS -->
+    <title>Em Breve</title>
     <link rel="stylesheet" href="css/style.css" />
-    <!-- Fonte -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"
-      rel="stylesheet" />
   </head>
   <body>
-    <main>
-      <section
-        class="countdown"
-        aria-label="Contador regressivo para o Ano Novo"
-        aria-live="polite">
-        <h1 class="title">Contador — Ano novo</h1>
-        <div class="countdown__grid">
-          <div class="box" role="group" aria-label="Dias">
-            <span class="value" data-days aria-atomic="true">00</span>
-            <span class="name" aria-hidden="true">dias</span>
-          </div>
-          <div class="box" role="group" aria-label="Horas">
-            <span class="value" data-hours aria-atomic="true">00</span>
-            <span class="name" aria-hidden="true">horas</span>
-          </div>
-          <div class="box" role="group" aria-label="Minutos">
-            <span class="value" data-minutes aria-atomic="true">00</span>
-            <span class="name" aria-hidden="true">minutos</span>
-          </div>
-          <div class="box" role="group" aria-label="Segundos">
-            <span class="value" data-seconds aria-atomic="true">00</span>
-            <span class="name" aria-hidden="true">segundos</span>
-          </div>
+    <div class="container">
+      <p class="label">algo grande está chegando</p>
+      <h1 class="titulo">EM BREVE</h1>
+
+      <div class="countdown" id="countdown">
+        <div class="bloco">
+          <span class="numero" id="dias">00</span>
+          <span class="legenda">dias</span>
         </div>
-      </section>
-    </main>
+        <div class="separador">:</div>
+        <div class="bloco">
+          <span class="numero" id="horas">00</span>
+          <span class="legenda">horas</span>
+        </div>
+        <div class="separador">:</div>
+        <div class="bloco">
+          <span class="numero" id="minutos">00</span>
+          <span class="legenda">minutos</span>
+        </div>
+        <div class="separador">:</div>
+        <div class="bloco">
+          <span class="numero" id="segundos">00</span>
+          <span class="legenda">segundos</span>
+        </div>
+      </div>
+
+      <p class="mensagem" id="mensagem"></p>
+    </div>
+
     <script src="js/script.js"></script>
   </body>
 </html>
