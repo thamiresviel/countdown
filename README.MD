@@ -1,170 +1,239 @@
-# 🎆 Countdown — Ano Novo
+# ⏳ Countdown Timer
 
-Contador regressivo para a virada do ano, desenvolvido com HTML, CSS e JavaScript puro.
+Página de contagem regressiva para lançamento de site — construída com HTML, CSS e JavaScript puro, sem dependências externas.
 
----
-
-## 🚀 Demonstração
-
-> Abra o arquivo `index.html` no navegador e o contador começa automaticamente.
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
+![Linguagens](https://img.shields.io/badge/HTML%20%7C%20CSS%20%7C%20JS-vanilla-blue)
+![Licença](https://img.shields.io/badge/licen%C3%A7a-MIT-green)
 
 ---
 
-## 📁 Estrutura do projeto
+## Índice
+
+- [⏳ Countdown Timer](#-countdown-timer)
+  - [Índice](#índice)
+  - [Sobre o projeto](#sobre-o-projeto)
+  - [Demo](#demo)
+  - [Funcionalidades](#funcionalidades)
+  - [Estrutura de arquivos](#estrutura-de-arquivos)
+  - [Como usar](#como-usar)
+    - [1. Clone o repositório](#1-clone-o-repositório)
+    - [2. Defina a data-alvo](#2-defina-a-data-alvo)
+    - [3. Abra no navegador](#3-abra-no-navegador)
+    - [4. Publique (opcional)](#4-publique-opcional)
+  - [Tutorial: entendendo o código](#tutorial-entendendo-o-código)
+    - [HTML — a estrutura](#html--a-estrutura)
+    - [CSS — o visual](#css--o-visual)
+    - [JavaScript — a lógica](#javascript--a-lógica)
+      - [1. Diferença entre datas](#1-diferença-entre-datas)
+      - [2. Conversão em cascata](#2-conversão-em-cascata)
+      - [3. Isolamento com módulo `%`](#3-isolamento-com-módulo-)
+      - [4. Atualização contínua](#4-atualização-contínua)
+  - [Personalização](#personalização)
+  - [Tecnologias](#tecnologias)
+  - [Licença](#licença)
+
+---
+
+## Sobre o projeto
+
+Este projeto é uma página estática de countdown — ideal para ser publicada antes do lançamento de um site, produto ou evento. Ela exibe o tempo restante em dias, horas, minutos e segundos, atualizando em tempo real.
+
+O projeto foi construído com foco didático: cada decisão de código está comentada e explicada, tornando-o um bom ponto de partida para quem está aprendendo desenvolvimento web.
+
+---
+
+## Demo
+
+> Adicione aqui o link do GitHub Pages após publicar.  
+> Exemplo: `https://thamiresviel.github.io/countdown`
+
+---
+
+## Funcionalidades
+
+- Contagem regressiva em tempo real (atualiza a cada 1 segundo)
+- Exibe dias, horas, minutos e segundos
+- Mensagem automática quando o prazo é atingido
+- Layout responsivo — funciona em mobile e desktop
+- Zero dependências externas
+
+---
+
+## Estrutura de arquivos
 
 ```
-countdown-ano-novo/
-├── index.html
-├── css/
-│   └── style.css
-└── js/
-    └── script.js
+countdown-timer/
+├── index.html      # estrutura da página
+├── style.css       # estilos e layout
+├── script.js       # lógica da contagem regressiva
+└── README.md       # documentação
 ```
 
 ---
 
-## 🛠️ Tecnologias
+## Como usar
 
-- HTML5 semântico
-- CSS3 (Grid, Custom Properties)
-- JavaScript (ES6+)
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/countdown-timer.git
+cd countdown-timer
+```
+
+### 2. Defina a data-alvo
+
+Abra o arquivo `script.js` e altere a data na primeira linha:
+
+```js
+// Formato: new Date(ano, mês - 1, dia, hora, minuto, segundo)
+// Atenção: meses começam do zero em JavaScript (janeiro = 0, dezembro = 11)
+
+const dataAlvo = new Date(2026, 11, 31, 0, 0, 0);
+//                              ^^
+//                         dezembro = 11
+```
+
+### 3. Abra no navegador
+
+Você pode abrir diretamente o `index.html` no navegador, ou usar uma extensão como o **Live Server** (VS Code) para ter recarregamento automático ao salvar.
+
+### 4. Publique (opcional)
+
+Para publicar no GitHub Pages:
+
+1. Vá em **Settings → Pages** no repositório
+2. Em **Source**, selecione a branch `main` e a pasta `/ (root)`
+3. Clique em **Save** — em alguns minutos o site estará disponível
 
 ---
 
-## 📖 Tutorial — Como foi construído
+## Tutorial: entendendo o código
 
-Este projeto é ótimo para praticar manipulação de datas em JavaScript e atualização dinâmica do DOM.
+### HTML — a estrutura
 
-### 1. Estrutura HTML
-
-O HTML define quatro "caixas", uma para cada unidade de tempo.
-Cada valor usa um atributo `data-*` como identificador, evitando
-o uso de classes ou IDs — o que deixa o código mais semântico e fácil de selecionar via JavaScript.
+O HTML organiza os quatro blocos de tempo (dias, horas, minutos, segundos) dentro de uma estrutura simples:
 
 ```html
-00 dias
+<div class="countdown" id="countdown">
+  <div class="bloco">
+    <span class="numero" id="dias">00</span>
+    <span class="legenda">dias</span>
+  </div>
+  <!-- ... demais blocos ... -->
+</div>
 ```
 
-### 2. Layout com CSS Grid
+**Por que usar `id` nos `<span>` dos números?**  
+O JavaScript precisa de um "gancho" para encontrar e atualizar cada elemento. O `id` é único na página — é por isso que usamos `document.getElementById("dias")` no JS.
 
-O layout usa `display: grid` para centralizar tudo na tela e organizar as quatro caixas lado a lado.
+**Por que o `<script>` fica no final do `<body>`?**  
+O JavaScript é executado na ordem em que aparece. Se o `<script>` viesse antes dos elementos HTML, o JS tentaria selecionar elementos que ainda não existem — e retornaria `null`.
+
+---
+
+### CSS — o visual
+
+Alguns pontos importantes do estilo:
+
+**Centralização com Flexbox**
 
 ```css
-/* Centraliza o contador verticalmente e horizontalmente */
 body {
-  display: grid;
-  place-content: center;
-  min-height: 100vh;
-}
-
-/* Distribui as 4 caixas em colunas iguais */
-.countdown__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  min-height: 100vh; /* ocupa 100% da altura da tela */
+  display: flex;
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center; /* centraliza horizontalmente */
 }
 ```
 
-### 3. Lógica JavaScript — a matemática do tempo
+**Tipografia responsiva com `clamp()`**
 
-Toda a lógica gira em torno de um único valor: a diferença em milissegundos entre agora e a meia-noite do próximo 1º de janeiro.
-
-```js
-const now = new Date();
-const newYear = new Date(now.getFullYear() + 1, 0, 1);
-const timeLeft = newYear - now; // diferença em milissegundos
+```css
+font-size: clamp(2.5rem, 8vw, 6rem);
+/* mínimo   ideal    máximo */
 ```
 
-A partir desse valor, cada unidade é extraída com divisões e o operador `%` (módulo), que descarta o que já foi contado
-pela unidade maior:
+`clamp()` faz o texto crescer proporcionalmente com a tela, sem precisar de media queries. `vw` significa _viewport width_ — 1vw = 1% da largura da janela.
 
-```
-timeLeft = 5.000.000.000 ms (exemplo)
+**Transição suave nos números**
 
-dias    = Math.floor(timeLeft / 86.400.000)
-horas   = Math.floor((timeLeft % 86.400.000) / 3.600.000)
-minutos = Math.floor((timeLeft % 3.600.000)  / 60.000)
-segundos= Math.floor((timeLeft % 60.000)     / 1.000)
+```css
+.numero {
+  transition: opacity 0.2s ease;
+}
 ```
 
-Por exemplo: se restar 90.000 ms (1 min e 30 s), `horas` e `dias` serão 0, `minutos` será 1 e `segundos` será 30.
-O `%` garante que os segundos não transbordem" para os minutos.
-
-```js
-const countdown = () => {
-  const now = new Date();
-  const newYear = new Date(now.getFullYear() + 1, 0, 1);
-  const timeLeft = newYear - now;
-
-  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-  );
-  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-  render(days, hours, minutes, seconds);
-};
-```
-
-### 4. Atualização do DOM e formatação
-
-A função `render` injeta os valores nas ``correspondentes.
-O`.padStart(2, "0")`garante que números de 1 dígito
-apareçam como`01`, `02`, etc.
-
-```js
-const render = (days, hours, minutes, seconds) => {
-  daysElement.innerHTML = String(days).padStart(2, "0");
-  hoursElement.innerHTML = String(hours).padStart(2, "0");
-  minutesElement.innerHTML = String(minutes).padStart(2, "0");
-  secondsElement.innerHTML = String(seconds).padStart(2, "0");
-};
-```
-
-### 5. O intervalo e a chamada inicial
-
-`setInterval` executa `countdown` a cada 1000 ms (1 segundo).
-A chamada direta antes do intervalo evita o atraso de 1s na exibição inicial — sem ela, a tela ficaria com "00" por 1s.
-
-```js
-countdown(); // exibe imediatamente
-setInterval(countdown, 1000); // atualiza a cada segundo
-```
+Quando o JavaScript atualiza o valor, a propriedade `opacity` pode ser animada, criando um efeito de fade suave ao invés de uma troca brusca.
 
 ---
 
-## ✅ Melhorias a implementar
+### JavaScript — a lógica
 
-### Funcionais
+**O núcleo do projeto está em três conceitos:**
 
-- [ ] **Parar o intervalo ao chegar em zero** — usar `clearInterval` para evitar valores negativos após a virada
-- [ ] **Permitir data-alvo customizável** — receber qualquer data via parâmetro ou campo de input, não só o Ano Novo
-- [ ] **Persistência via URL** — salvar a data alvo na query string (`?target=2025-12-31`) para compartilhar o link
+#### 1. Diferença entre datas
 
-### Visuais
+```js
+const agora = new Date();
+const diferenca = dataAlvo - agora; // resultado em milissegundos
+```
 
-- [ ] **Animação de flip** — efeito de "carta virando" ao trocar o número (como relógios de aeroporto)
-- [ ] **Responsividade mobile** — adaptar o grid para 2×2 em telas pequenas com media queries
-- [ ] **Tema escuro/claro** — alternar com `prefers-color-scheme` ou um botão de toggle
+`Date` armazena datas como milissegundos desde 01/01/1970. Subtrair dois objetos `Date` devolve a diferença nessa unidade.
 
-### Código
+#### 2. Conversão em cascata
 
-- [ ] **Separar a lógica de data** em uma função pura `getTimeLeft(targetDate)` para facilitar testes e reaproveitamento
-- [ ] **Adicionar testes unitários** com Vitest ou Jest para validar os cálculos de dias/horas/minutos/segundos
+```js
+const totalSegundos = Math.floor(diferenca / 1000);
+const totalMinutos = Math.floor(totalSegundos / 60);
+const totalHoras = Math.floor(totalMinutos / 60);
+const totalDias = Math.floor(totalHoras / 24);
+```
+
+Cada divisão converte para a próxima unidade. `Math.floor()` descarta as casas decimais.
+
+#### 3. Isolamento com módulo `%`
+
+```js
+const segundos = totalSegundos % 60; // resto da divisão por 60
+const minutos = totalMinutos % 60;
+const horas = totalHoras % 24;
+```
+
+O operador `%` retorna o **resto** da divisão — ele isola o "excedente" que não coube na unidade maior. Por exemplo: 90 minutos → `90 % 60 = 30` (30 minutos além de 1 hora completa).
+
+#### 4. Atualização contínua
+
+```js
+atualizarContagem(); // roda imediatamente ao carregar
+setInterval(atualizarContagem, 1000); // repete a cada 1000ms
+```
+
+A função é chamada uma vez de imediato (para não haver delay visual) e depois agendada para repetir a cada segundo.
 
 ---
 
-## ⚙️ Como usar
+## Personalização
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/thamiresviel/countdown-ano-novo.git
-   ```
-2. Abra o arquivo `index.html` no navegador.
+| O que mudar              | Onde                                     | Como                                          |
+| ------------------------ | ---------------------------------------- | --------------------------------------------- |
+| Data-alvo                | `script.js`, linha 1                     | `new Date(ano, mês-1, dia, hora, min, seg)`   |
+| Mensagem de encerramento | `script.js`, bloco `if (diferenca <= 0)` | Altere o `textContent`                        |
+| Cores                    | `style.css`                              | Modifique as variáveis ou propriedades de cor |
+| Fonte                    | `style.css`, `@import`                   | Troque pelo Google Fonts de sua preferência   |
+| Texto "EM BREVE"         | `index.html`, `<h1>`                     | Edite diretamente o conteúdo da tag           |
 
 ---
 
-## 📄 Licença
+## Tecnologias
 
-Este projeto está sob a licença MIT.
+- HTML5
+- CSS3 (Flexbox, `clamp()`, `transition`)
+- JavaScript ES6+ (`const`, arrow functions, template literals)
+- [Google Fonts](https://fonts.google.com) — Space Mono + Inter
+
+---
+
+## Licença
+
+Distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
